@@ -2,6 +2,7 @@ import org.junit.*;
 import static org.junit.Assert.*;
 import org.sql2o.*;
 import java.util.Arrays;
+import java.util.List;
 
 public class CommunityTest {
 
@@ -44,6 +45,53 @@ public class CommunityTest {
         secondCommunity.save();
         assertEquals(true, Community.all().get(0).equals(firstCommunity));
         assertEquals(true, Community.all().get(1).equals(secondCommunity));
+    }
+    @Test
+    public void addPerson_addsPersonToCommunity() {
+        Community testCommunity = new Community("Fire Enthusiasts", "Flame on!");
+        testCommunity.save();
+        Person testPerson = new Person("Henry", "[email protected] (Links to an external site.)");
+        testPerson.save();
+        testCommunity.addPerson(testPerson);
+        Person savedPerson = testCommunity.getPersons().get(0);
+        assertTrue(testPerson.equals(savedPerson));
+    }
+    @Test
+    public void getPersons_returnsAllPersons_List() {
+        Community testCommunity = new Community("Fire Enthusiasts", "Flame on!");
+        testCommunity.save();
+        Person testPerson = new Person("Henry", "[email protected] (Links to an external site.)");
+        testPerson.save();
+        testCommunity.addPerson(testPerson);
+        List savedPersons = testCommunity.getPersons();
+        assertEquals(savedPersons.size(), 1);
+    }
+    @Test
+    public void delete_deletesCommunity_true() {
+        Community testCommunity = new Community("Fire Enthusiasts", "Flame on!");
+        testCommunity.save();
+        testCommunity.delete();
+        assertEquals(0, Community.all().size());
+    }
+    @Test
+    public void delete_deletesAllPersonsAndCommunitiesAssociations() {
+        Community testCommunity = new Community("Fire Enthusiasts", "Flame on!");
+        testCommunity.save();
+        Person testPerson = new Person("Henry", "henry@henry.com");
+        testPerson.save();
+        testCommunity.addPerson(testPerson);
+        testCommunity.delete();
+        assertEquals(0, testPerson.getCommunities().size());
+    }
+    @Test
+    public void removePerson_removesAssociationWithSpecifiedCommunity() {
+        Community testCommunity = new Community("Fire Enthusiasts", "Flame on!");
+        testCommunity.save();
+        Person testPerson = new Person("Henry", "henry@henry.com");
+        testPerson.save();
+        testCommunity.removePerson(testPerson);
+        List savedPersons = testCommunity.getPersons();
+        assertEquals(0, savedPersons.size());
     }
 
 }

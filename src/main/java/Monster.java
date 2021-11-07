@@ -135,8 +135,6 @@ public abstract class Monster {
             con.createQuery(sql)
                     .addParameter("id", id)
                     .executeUpdate();
-            con.commit(false);
-
         }
         foodLevel++;
     }
