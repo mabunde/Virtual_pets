@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Timer;
 
-public class FireMonster extends Monster {
+public class FireMonster extends Monster implements DatabaseManagement {
     private int fireLevel;
     public Timestamp lastKindling;
     public static final int MAX_FIRE_LEVEL = 10;
@@ -79,5 +79,6 @@ public class FireMonster extends Monster {
             return monster;
         }
     }
+
 
 }

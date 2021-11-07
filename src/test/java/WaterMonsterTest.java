@@ -303,6 +303,11 @@ public class WaterMonsterTest {
         Timestamp rightNow = new Timestamp(new Date().getTime());
         assertEquals(DateFormat.getDateTimeInstance().format(rightNow), DateFormat.getDateTimeInstance().format(savedWaterMonsterLastWater));
     }
-
-
+    @Test
+    public void delete_deletesWaterMonster_true() {
+        WaterMonster testWaterMonster = new WaterMonster("Bubbles", 1);
+        testWaterMonster.save();
+        testWaterMonster.delete();
+        assertEquals(null, WaterMonster.find(testWaterMonster.getId()));
+    }
 }

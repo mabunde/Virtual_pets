@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Timer;
 
-public class WaterMonster extends Monster {
+public class WaterMonster extends Monster implements DatabaseManagement{
 
     private int waterLevel;
     public Timestamp lastWater;
